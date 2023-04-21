@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Upcoming Events!</h1>
+
+<div class="event-container">
+{% for event in events %}
+<div class="event">
+    <h2>{{ event.name }}</h2>
+    <h3>{{ event.description }}</h3>
+    <h4>When: {{ event.date.strftime("%b %d %Y") }}</h4>
+    <h5>Guests: {{ event.guests }}</h5>
+    <h5>Room: {{ event.room_location }}</h5>
+
+    {% if event.recurring %}
+    <p><i>Recurring </i></p>
+    {% endif %}
+
+    <form class="form-inline" action="/delete/{{ event.name }}" method="POST">
+        <input type="submit" value="Delete">
+    </form>
+
+
+</div>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block form %}
+
+<form action="/events" method="post">
+    <label for="date">Date:</label><br>
+    <input type="date" id="date" name="date" value=""><br>
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" value=""><br>
+    <label for="guests">Guests:</label><br>
+    <input type="number" id="guests" name="guests" value=""><br>
+    <label for="room_location">Room location:</label><br>
+    <input type="text" id="room_location" name="room_location" value=""><br>
+    <label for="description">description:</label><br>
+    <input type="text" id="description" name="description" value=""><br>
+    <label for="recurring">Recurring?</label><br>
+    <input type="checkbox" name="recurring" id="recurring" value="False"><br>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}
